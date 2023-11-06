@@ -1,4 +1,5 @@
 from tkinter import filedialog, END
+import os
 
 open_status_name = False
 
@@ -6,8 +7,12 @@ open_status_name = False
 def open_file(my_text, status_bar, root):
     my_text.delete("1.0", END)
 
-    text_file = filedialog.askopenfilename(initialdir="", title="Open File",
-                                           filetypes=(("Text Files", "*.txt"), ("All Files", "*.*")))
+    initialdir = os.path.expanduser("~")
+    text_file = filedialog.askopenfilename(
+        initialdir=initialdir,
+        title="Open File",
+        filetypes=(("Text Files", "*.txt"), ("All Files", "*.*"))
+    )
 
     if text_file:
         global open_status_name
@@ -25,8 +30,13 @@ def open_file(my_text, status_bar, root):
 
 
 def save_as_file(my_text, status_bar, root):
-    text_file = filedialog.asksaveasfilename(defaultextension=".txt", initialdir="", title="Save File",
-                                             filetypes=(("Text Files", "*.txt"), ("All Files", "*.*")))
+    initialdir = os.path.expanduser("~")
+    text_file = filedialog.asksaveasfilename(
+        defaultextension=".txt",
+        initialdir=initialdir,
+        title="Save File",
+        filetypes=(("Text Files", "*.txt"), ("All Files", "*.*"))
+    )
     if text_file:
         name = text_file
         status_bar.config(text=f'Saved:{name}        ')
