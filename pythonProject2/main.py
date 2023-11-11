@@ -149,6 +149,24 @@ file_menu.add_command(label="Save As", command=save_as_file)
 file_menu.add_separator()
 file_menu.add_command(label="Exit", command=exit_app)
 
+def move_to_start_of_line(event):
+    current_index = my_text.index(INSERT)
+    line, column = map(int, current_index.split('.'))
+    new_index = f"{line}.0"
+    my_text.mark_set(INSERT, new_index)
+    my_text.see(INSERT)
+
+def move_to_end_of_line(event):
+    current_index = my_text.index(INSERT)
+    line, column = map(int, current_index.split('.'))
+    line_text = my_text.get(f"{line}.0", f"{line}.end")
+    new_index = f"{line}.{len(line_text) - 1}"
+    my_text.mark_set(INSERT, new_index)
+    my_text.see(INSERT)
+
+my_text.bind("<Control-Left>", move_to_start_of_line)
+my_text.bind("<Control-Right>", move_to_end_of_line)
+
 # Add Edit Menu
 edit_menu = Menu(my_menu, tearoff=False)
 my_menu.add_cascade(label="Edit", menu=edit_menu)
